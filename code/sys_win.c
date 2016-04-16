@@ -20,9 +20,22 @@ typedef uint64_t uint64;
 global_variable int32 numArgs = 0; 
 global_variable const char *largv[MAX_NUM_ARGVS + 1];
 
-int32 COM_IndexOfArg(char *arg) {
+int32 Q_strcmp(const char *s1, const char *s2) {
+  const unsigned char *p1 = (const unsigned char *)s1;
+  const unsigned char *p2 = (const unsigned char *)s2;
+  while (*p1 == *p2) {
+    if (!*p1) {
+      return 0;
+    }
+    p1++;
+    p2++;
+  }
+  return ((*p1 < *p2) ? -1 : 1);
+}
+
+int32 COM_IndexOfArg(const char *arg) {
   for (int32 i = 1; i < numArgs; i++) {
-    if (!strcmp(arg, largv[i]))
+    if (!Q_strcmp(arg, largv[i]))
       return i;
   }
   // We zeroed the value at index 0 so this is safe
