@@ -53,10 +53,5 @@ int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Command
     }
   }
 
-  if (numArgs < MAX_NUM_ARGVS) {
-    // Explicitly clear the garbage from the first unused command line slot 
-    largv[numArgs] = '\0';
-  }
-
   return 0;
 }
