@@ -1,14 +1,27 @@
+#include <stdint.h>
 #include <windows.h>
 
-// CHALLENGE: write my own version of the strcmp function.
+#define internal static
+#define global_variable static
+
+typedef int8_t int8;
+typedef int16_t int16;
+typedef int32_t int32;
+typedef int64_t int64;
+typedef int32 bool32;
+
+typedef uint8_t uint8;
+typedef uint16_t uint16;
+typedef uint32_t uint32;
+typedef uint64_t uint64;
 
 #define MAX_NUM_ARGVS 50
 
-int numArgs = 0; 
-const char *largv[MAX_NUM_ARGVS];
+global_variable int32 numArgs = 0; 
+global_variable const char *largv[MAX_NUM_ARGVS];
 
-int COM_IndexOfArg(char *arg) {
-  for (int i = 1; i < numArgs; i++) {
+int32 COM_IndexOfArg(char *arg) {
+  for (int32 i = 1; i < numArgs; i++) {
     if (!strcmp(arg, largv[i]))
       return i;
   }
@@ -16,7 +29,7 @@ int COM_IndexOfArg(char *arg) {
   return 0; 
 }
 
-int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLine, int ShowCode) {
+int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLine, int32 ShowCode) {
   largv[0] = '\0';
   numArgs++;
 
