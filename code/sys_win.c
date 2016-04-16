@@ -18,7 +18,7 @@ typedef uint64_t uint64;
 #define MAX_NUM_ARGVS 50
 
 global_variable int32 numArgs = 0; 
-global_variable const char *largv[MAX_NUM_ARGVS];
+global_variable const char *largv[MAX_NUM_ARGVS + 1];
 
 int32 COM_IndexOfArg(char *arg) {
   for (int32 i = 1; i < numArgs; i++) {
@@ -33,7 +33,7 @@ int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Command
   largv[0] = '\0';
   numArgs++;
 
-  while (*CommandLine && numArgs < MAX_NUM_ARGVS) {
+  while (*CommandLine && numArgs < MAX_NUM_ARGVS + 1) {
     while (*CommandLine && ((*CommandLine <= 32) || (*CommandLine > 126)))
       CommandLine++;
 
