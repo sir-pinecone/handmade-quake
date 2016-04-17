@@ -8,8 +8,8 @@ int32 Q_strcmp(const char *s1, const char *s2) {
     if (!*p1) {
       return 0;
     }
-    p1++;
-    p2++;
+    ++p1;
+    ++p2;
   }
   return ((*p1 < *p2) ? -1 : 1);
 }
@@ -26,14 +26,15 @@ int32 Q_atoi(const char *str) {
 
   if (*str == '-') {
     sign = -1;
-    str++;
+    ++str;
   }
 
   // hex
   if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
     str += 2;
     while (1) {
-      c = *str++;
+      c = *str;
+      ++str;
       if (c >= '0' && c <= '9') {
         val = val * 16 + (c - '0');
       }
@@ -51,7 +52,8 @@ int32 Q_atoi(const char *str) {
 
   // decimal
   while (1) {
-    c = *str++;
+    c = *str;
+    ++str;
     if (c < '0' || c > '9') {
       return sign * val;
     }
