@@ -17,10 +17,11 @@ typedef uint32_t uint32;
 typedef uint64_t uint64;
 
 
-#define MAX_NUM_ARGVS 50
+#define MAX_NUM_ARGS 50
 
 global_variable int32 numArgs = 0; 
-global_variable const char *largv[MAX_NUM_ARGVS + 1];
+// Pad by 2 so that we can zero the first element and last element at largv[numArgs]
+global_variable const char *largv[MAX_NUM_ARGS + 2]; 
 
 int32 Q_strcmp(const char *s1, const char *s2) {
   const unsigned char *p1 = (const unsigned char *)s1;
@@ -40,6 +41,10 @@ int32 Q_atoi(const char *str) {
   int32 sign = 1;
   int32 val = 0;
   char c;
+
+  if (!str) {
+    return 0;
+  }
   
   if (*str == '-') {
     sign = -1;
@@ -89,7 +94,7 @@ int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Command
   largv[0] = '\0';
   numArgs++;
 
-  while (*CommandLine && numArgs < MAX_NUM_ARGVS + 1) {
+  while (*CommandLine && numArgs < MAX_NUM_ARGS + 1) {
     while (*CommandLine && ((*CommandLine <= 32) || (*CommandLine > 126)))
       CommandLine++;
 
@@ -108,6 +113,9 @@ int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Command
       }
     }
   }
+
+  // Make it safe to always get the value that comes after the last arg   
+  largv[numArgs] = '\0';                                                                                                                            
 
   int a = Q_atoi("123") == 123;
   int b = Q_atoi("-1453") == -1453;
