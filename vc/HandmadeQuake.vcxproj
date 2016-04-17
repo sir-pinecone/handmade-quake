@@ -146,7 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\code\common.c" />
+    <ClCompile Include="..\code\q_stl.c" />
     <ClCompile Include="..\code\sys_win.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\code\common.h" />
+    <ClInclude Include="..\code\quakedef.h" />
+    <ClInclude Include="..\code\q_stl.h" />
+    <ClInclude Include="..\code\winquake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
