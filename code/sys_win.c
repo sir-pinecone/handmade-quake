@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <windows.h>
 
+
 #define internal static
 #define global_variable static
 
@@ -14,6 +15,7 @@ typedef uint8_t uint8;
 typedef uint16_t uint16;
 typedef uint32_t uint32;
 typedef uint64_t uint64;
+
 
 #define MAX_NUM_ARGVS 50
 
@@ -31,6 +33,47 @@ int32 Q_strcmp(const char *s1, const char *s2) {
     p2++;
   }
   return ((*p1 < *p2) ? -1 : 1);
+}
+
+/* Custom string to number coercion. Supports signed decimal or hex values. */
+int32 Q_atoi(const char *str) {
+  int32 sign = 1;
+  int32 val = 0;
+  char c;
+  
+  if (*str == '-') {
+    sign = -1;
+    str++;
+  }
+
+  // hex
+  if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
+    str += 2;
+    while (1) {
+      c = *str++;
+      if (c >= '0' && c <= '9') {
+        val = val * 16 + (c - '0');
+      }
+      else if (c >= 'a' && c <= 'f') {
+        val = val * 16 + c - 'a' + 10;
+      }
+      else if (c >= 'A' && c <= 'F') {
+        val = val * 16 + c - 'A' + 10;
+      }
+      else {
+        return sign * val;
+      }
+    }
+  }
+  
+  // decimal
+  while (1) {
+    c = *str++;
+    if (c < '0' || c > '9') {
+      return sign * val;
+    }
+    val = val * 10 + (c - '0'); // '0' is 48 so c - '0' gives us the numerical version of the ascii number.
+  }
 }
 
 int32 COM_IndexOfArg(const char *arg) {
@@ -65,6 +108,13 @@ int32 CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Command
       }
     }
   }
+
+  int a = Q_atoi("123") == 123;
+  int b = Q_atoi("-1453") == -1453;
+  int c = Q_atoi("0xF") == 15;
+
+  int alpha = Q_atoi(largv[COM_IndexOfArg("-setAlpha") + 1]);
+  int fov = Q_atoi(largv[COM_IndexOfArg("-fov") + 1]);
 
   return 0;
 }
