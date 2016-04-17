@@ -33,7 +33,7 @@ void COM_ParseCommandLine(char *commandLine) {
 }
 
 int32 COM_IndexOfArg(const char *arg) {
-  for (int32 i = 1; i < com_numArgs; i++) {
+  for (uint32 i = 1; i < com_numArgs; i++) {
     if (!Q_strcmp(arg, com_largv[i]))
       return i;
   }
