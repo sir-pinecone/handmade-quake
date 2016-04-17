@@ -1,6 +1,39 @@
 #include "quakedef.h"
 
 
+uint32 Q_strlen(const char *str) {
+  uint32 count = 0;
+  while (str[count]) {
+    ++count;
+  }
+  return count;
+}
+
+void Q_strcpy(char *dest, const char *src) {
+  while (*dest = *src) {
+    ++dest;
+    ++src;
+  }
+}
+
+void Q_strncpy(char *dest, const char *src, int32 count) {
+  if (count < 0) {
+    return;
+  }
+
+  while (count && (*dest = *src)) {
+    ++dest;
+    ++src;
+    --count;
+  }
+
+  while (count) {
+    *dest = 0;
+    ++dest;
+    --count;
+  }
+}
+
 int32 Q_strcmp(const char *s1, const char *s2) {
   const unsigned char *p1 = (const unsigned char *)s1;
   const unsigned char *p2 = (const unsigned char *)s2;
