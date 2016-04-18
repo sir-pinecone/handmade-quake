@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HandmadeQuake", "HandmadeQuake.vcxproj", "{545A3092-E9C4-41D5-8EDF-AFD290F00AF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HandmadeQuake - module 1", "..\module-1\vc\HandmadeQuakeModule1.vcxproj", "{545A3092-E9C4-41D5-8EDF-AFD290F00AF8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HandmadeQuake - module 2", "..\module-2\vc\HandmadeQuakeModule2.vcxproj", "{FBCF7389-AFD3-4742-8275-512D51F80E7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{545A3092-E9C4-41D5-8EDF-AFD290F00AF8}.Release|x64.Build.0 = Release|x64
 		{545A3092-E9C4-41D5-8EDF-AFD290F00AF8}.Release|x86.ActiveCfg = Release|Win32
 		{545A3092-E9C4-41D5-8EDF-AFD290F00AF8}.Release|x86.Build.0 = Release|Win32
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Debug|x64.ActiveCfg = Debug|x64
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Debug|x64.Build.0 = Debug|x64
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Debug|x86.ActiveCfg = Debug|Win32
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Debug|x86.Build.0 = Debug|Win32
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Release|x64.ActiveCfg = Release|x64
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Release|x64.Build.0 = Release|x64
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Release|x86.ActiveCfg = Release|Win32
+		{FBCF7389-AFD3-4742-8275-512D51F80E7B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
