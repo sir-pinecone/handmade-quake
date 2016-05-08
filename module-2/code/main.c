@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #define internal static
 #define global_variable static
@@ -124,7 +125,8 @@ int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLi
   if (RegisterClass(&windowClass)) {
     DWORD windowStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 
-    // Get an adjusted rendering rect
+    // Get an adjusted rendering rect to take full advantage of the window area for drawing.
+    // (MC) Not sure why Philip added this...
     RECT r;
     r.top = r.left = 0;
     r.right = defaultWidth;
@@ -145,13 +147,22 @@ int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLi
       Instance,
       0 // provides a callback message called WM_CREATE
     );
+
+    LARGE_INTEGER Frequency;
+    QueryPerformanceFrequency(&Frequency);
+    
+    double SecondsPerTick = 1.0 / (double)Frequency.QuadPart;
+
+    LARGE_INTEGER Tick, Tock;
+    QueryPerformanceCounter(&Tick);
+
     if (window) {
       GlobalRunning = 1;
 
       while (GlobalRunning) {
         MSG Message;
         // Don't use the blocking GetMessageA since we want to use the idle time
-        while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
+        while (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE)) {
           // Flush the queue before rendering
           if (Message.message == WM_QUIT) {
               GlobalRunning = 1;
@@ -159,6 +170,19 @@ int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLi
           TranslateMessage(&Message);
           DispatchMessage(&Message);
         }
+        // TODO: update game if it's time
+        // TODO: render game if it's time
+
+        // Calculate game loop timing
+        QueryPerformanceCounter(&Tock);
+        __int64 Interval = Tock.QuadPart - Tick.QuadPart;
+        double SecondsGoneBy = (double)Interval * SecondsPerTick;
+
+        //char buf[64];
+        //sprintf_s(buf, 64, "Total time: %3.7f \n", SecondsGoneBy);
+        //OutputDebugStringA(buf);
+
+        Tick = Tock;
       }
     }
   }
