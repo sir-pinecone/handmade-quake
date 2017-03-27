@@ -28,6 +28,9 @@ struct win32_window_dimension {
 // TODO: global for now
 global_variable bool32 GlobalRunning;
 
+void Sys_Shutdown(void) {
+  GlobalRunning = FALSE;
+}
 
 internal LRESULT CALLBACK Win32MainWindowCallback(HWND window, UINT Message, WPARAM WParam, LPARAM LParam) {
   LRESULT Result = 0;
@@ -39,11 +42,11 @@ internal LRESULT CALLBACK Win32MainWindowCallback(HWND window, UINT Message, WPA
     } break;
     case WM_CLOSE: {
       // TODO: handle this with a message to the user?
-      GlobalRunning = 0;
+      Sys_Shutdown();
     } break;
     case WM_DESTROY: {
       // TODO handle this as an error then recreate window?
-      GlobalRunning = 0;
+      Sys_Shutdown();
     } break;
       // syskey will include things like alt-f4
     case WM_SYSKEYDOWN:
@@ -77,14 +80,14 @@ internal LRESULT CALLBACK Win32MainWindowCallback(HWND window, UINT Message, WPA
         else if (VKCode == VK_RIGHT) {
         }
         else if (VKCode == VK_ESCAPE) {
-          GlobalRunning = 0;
+          Sys_Shutdown();
         }
         else if (VKCode == VK_SPACE) {
         }
 
         bool32 altKeyIsDown = (LParam & (1 << 29));
         if ((VKCode == VK_F4) && altKeyIsDown) {
-          GlobalRunning = 0;
+          Sys_Shutdown();
         }
       }
     } break;
@@ -157,7 +160,7 @@ int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLi
     QueryPerformanceCounter(&Tick);
 
     if (window) {
-      GlobalRunning = 1;
+      GlobalRunning = TRUE;
 
       while (GlobalRunning) {
         MSG Message;
@@ -165,7 +168,7 @@ int CALLBACK WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CommandLi
         while (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE)) {
           // Flush the queue before rendering
           if (Message.message == WM_QUIT) {
-              GlobalRunning = 1;
+              GlobalRunning = FALSE;
           }
           TranslateMessage(&Message);
           DispatchMessage(&Message);
